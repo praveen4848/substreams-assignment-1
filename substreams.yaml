@@ -1,0 +1,27 @@
+specVersion: v0.1.0
+package:
+  name: solana_transfers
+  version: v0.1.0
+  description: Extracts Solana transfer actions for blocks 385870151 to 385870156
+
+protobuf:
+  files:
+    - transfers.proto
+  importPaths:
+    - ./proto
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ./target/wasm32-unknown-unknown/release/solana_transfers.wasm
+
+modules:
+  - name: map_transfers
+    kind: map
+    initialBlock: 385870151
+    inputs:
+      - source: sf.solana.type.v1.Block
+    output:
+      type: proto:solana.transfers.v1.Transfers
+
+network: solana-mainnet-beta
